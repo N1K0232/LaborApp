@@ -5,7 +5,20 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LaborApp", "src\LaborApp\LaborApp.csproj", "{DB137CA4-7646-42DD-856D-373EB7D3C77B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaborApp.BusinessLayer", "src\LaborApp.BusinessLayer\LaborApp.BusinessLayer.csproj", "{D0F2FAB8-16DB-45EF-B5FA-D3456FE796FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LaborApp.BusinessLayer", "src\LaborApp.BusinessLayer\LaborApp.BusinessLayer.csproj", "{D0F2FAB8-16DB-45EF-B5FA-D3456FE796FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0CD00023-4734-4856-ADCC-7BB822B961CA}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaborApp.DataAccessLayer", "src\LaborApp.DataAccessLayer\LaborApp.DataAccessLayer.csproj", "{FC30DE31-17AB-4DDC-A750-B3DCD1D53E86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaborApp.Shared", "src\LaborApp.Shared\LaborApp.Shared.csproj", "{BF33F512-2B85-4FF4-8165-E199755FA072}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LaborApp.StorageProviders", "src\LaborApp.StorageProviders\LaborApp.StorageProviders.csproj", "{0513302A-DCBD-478E-9EAC-889A6D087C05}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "LaborApp.Database", "src\LaborApp.Database\LaborApp.Database.sqlproj", "{890958B2-CC1F-441C-BE78-6FB483ADF059}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +34,24 @@ Global
 		{D0F2FAB8-16DB-45EF-B5FA-D3456FE796FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0F2FAB8-16DB-45EF-B5FA-D3456FE796FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0F2FAB8-16DB-45EF-B5FA-D3456FE796FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC30DE31-17AB-4DDC-A750-B3DCD1D53E86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC30DE31-17AB-4DDC-A750-B3DCD1D53E86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC30DE31-17AB-4DDC-A750-B3DCD1D53E86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC30DE31-17AB-4DDC-A750-B3DCD1D53E86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF33F512-2B85-4FF4-8165-E199755FA072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF33F512-2B85-4FF4-8165-E199755FA072}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF33F512-2B85-4FF4-8165-E199755FA072}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF33F512-2B85-4FF4-8165-E199755FA072}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0513302A-DCBD-478E-9EAC-889A6D087C05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0513302A-DCBD-478E-9EAC-889A6D087C05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0513302A-DCBD-478E-9EAC-889A6D087C05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0513302A-DCBD-478E-9EAC-889A6D087C05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{890958B2-CC1F-441C-BE78-6FB483ADF059}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{890958B2-CC1F-441C-BE78-6FB483ADF059}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{890958B2-CC1F-441C-BE78-6FB483ADF059}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{890958B2-CC1F-441C-BE78-6FB483ADF059}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{890958B2-CC1F-441C-BE78-6FB483ADF059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{890958B2-CC1F-441C-BE78-6FB483ADF059}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

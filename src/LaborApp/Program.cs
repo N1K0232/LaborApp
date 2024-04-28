@@ -2,11 +2,13 @@ using System.Diagnostics;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 using LaborApp.BusinessLayer.Settings;
+using LaborApp.DataAccessLayer;
 using LaborApp.Exceptions;
 using LaborApp.Extensions;
 using LaborApp.Swagger;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
@@ -98,6 +100,16 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
     }
 
     services.AddRazorPages();
+
+    services.AddDbContext<IDataContext, DataContext>(options =>
+    {
+        var connectionString = configuration.GetConnectionString("SqlConnection");
+        options.UseSqlServer(connectionString, sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure(appSettings.MaxRetryCount, appSettings.MaxRetryDelay, null);
+            sqlOptions.CommandTimeout(appSettings.CommandTimeout);
+        });
+    });
 }
 
 void Configure(IApplicationBuilder app, IServiceProvider services, IWebHostEnvironment environment)

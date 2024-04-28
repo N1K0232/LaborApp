@@ -13,4 +13,10 @@
     <PackageReference Include="TinyHelpers" Version="3.1.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LaborApp.DataAccessLayer\LaborApp.DataAccessLayer.csproj" />
+    <ProjectReference Include="..\LaborApp.Shared\LaborApp.Shared.csproj" />
+    <ProjectReference Include="..\LaborApp.StorageProviders\LaborApp.StorageProviders.csproj" />
+  </ItemGroup>
+
 </Project>
