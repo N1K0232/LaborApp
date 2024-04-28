@@ -1,19 +1,25 @@
 using System.Diagnostics;
+using System.Net.Mime;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
+using LaborApp.BusinessLayer.HealthChecks;
 using LaborApp.BusinessLayer.Settings;
 using LaborApp.DataAccessLayer;
 using LaborApp.Exceptions;
 using LaborApp.Extensions;
 using LaborApp.Swagger;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using MinimalHelpers.OpenApi;
+using MinimalHelpers.Routing;
 using OperationResults.AspNetCore.Http;
+using Serilog;
 using TinyHelpers.AspNetCore.Extensions;
 using TinyHelpers.AspNetCore.Swagger;
 using TinyHelpers.Json.Serialization;
@@ -30,6 +36,11 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
 {
     var appSettings = services.ConfigureAndGet<AppSettings>(configuration, nameof(AppSettings));
     var swaggerSettings = services.ConfigureAndGet<SwaggerSettings>(configuration, nameof(SwaggerSettings));
+
+    host.UseSerilog((hostingContext, loggerConfiguration) =>
+    {
+        loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration);
+    });
 
     services.AddRequestLocalization(appSettings.SupportedCultures);
     services.AddWebOptimizer(minifyCss: true, minifyJavaScript: environment.IsProduction());
@@ -110,6 +121,8 @@ void ConfigureServices(IServiceCollection services, IConfiguration configuration
             sqlOptions.CommandTimeout(appSettings.CommandTimeout);
         });
     });
+
+    services.AddHealthChecks().AddCheck<SqlConnectionHealthCheck>("sql", timeout: TimeSpan.FromMinutes(1));
 }
 
 void Configure(IApplicationBuilder app, IServiceProvider services, IWebHostEnvironment environment)
@@ -157,8 +170,33 @@ void Configure(IApplicationBuilder app, IServiceProvider services, IWebHostEnvir
         });
     }
 
+    app.UseSerilogRequestLogging();
+    app.UseAuthorization();
+
     app.UseEndpoints(endpoints =>
     {
+        endpoints.MapEndpoints();
         endpoints.MapRazorPages();
+        endpoints.MapHealthChecks("/status",
+                   new HealthCheckOptions
+                   {
+                       ResponseWriter = async (context, report) =>
+                       {
+                           var result = System.Text.Json.JsonSerializer.Serialize(
+                               new
+                               {
+                                   status = report.Status.ToString(),
+                                   details = report.Entries.Select(e => new
+                                   {
+                                       service = e.Key,
+                                       status = Enum.GetName(typeof(HealthStatus), e.Value.Status),
+                                       description = e.Value.Description
+                                   })
+                               });
+
+                           context.Response.ContentType = MediaTypeNames.Application.Json;
+                           await context.Response.WriteAsync(result);
+                       }
+                   });
     });
 }
